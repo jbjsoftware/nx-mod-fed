@@ -1,10 +1,10 @@
 export function App() {
   return (
-    <div>
-      <header className="flex justify-between items-center p-4">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
+    <div className="flex flex-1 flex-col h-full">
+      <header className="flex justify-between items-center p-2 border-b border-t w-full">
+        <h1 className="text-xl font-bold">Dashboard</h1>
       </header>
-      <main className="flex">
+      <main className="flex flex-1 p-4">
         <div className="flex flex-col gap-4">
           <h2 className="text-lg font-bold">Welcome to the Dashboard</h2>
         </div>
