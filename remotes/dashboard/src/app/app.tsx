@@ -1,8 +1,8 @@
 export function App() {
   return (
     <div className="flex flex-1 flex-col h-full">
-      <header className="flex justify-between items-center p-2 border-b border-t w-full">
-        <h1 className="text-xl font-bold">Dashboard</h1>
+      <header className="flex justify-between items-center p-2 w-full">
+        <h1 className="font-bold">Dashboard</h1>
       </header>
       <main className="flex flex-1 p-4">
         <div className="flex flex-col gap-4">

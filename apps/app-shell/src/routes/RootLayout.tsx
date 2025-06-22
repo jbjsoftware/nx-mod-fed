@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import '../styles.css';
+import AppHeader from '../components/layout/app-header';
 
 const RootLayout = () => {
   return (
@@ -11,9 +12,7 @@ const RootLayout = () => {
         <Link to="/settings">Settings</Link>
       </div>
       <div className="flex flex-1 flex-col bg-red">
-        <header className="flex justify-between items-center p-4">
-          <h1 className="text-2xl font-bold">My App</h1>
-        </header>
+        <AppHeader />
 
         <main className="flex flex-1">
           <React.Suspense fallback={null}>
