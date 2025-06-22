@@ -1,0 +1,94 @@
+{
+  "name": "dashboard",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "remotes/dashboard/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/remotes/dashboard",
+        "index": "remotes/dashboard/src/index.html",
+        "baseHref": "/",
+        "main": "remotes/dashboard/src/main.ts",
+        "tsConfig": "remotes/dashboard/tsconfig.app.json",
+        "assets": [
+          "remotes/dashboard/src/favicon.ico",
+          "remotes/dashboard/src/assets"
+        ],
+        "styles": ["remotes/dashboard/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "remotes/dashboard/webpack.config.ts"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "remotes/dashboard/src/environments/environment.ts",
+              "with": "remotes/dashboard/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/react:module-federation-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "dashboard:build",
+        "hmr": true,
+        "port": 4201
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "dashboard:build:development"
+        },
+        "production": {
+          "buildTarget": "dashboard:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "executor": "@nx/react:module-federation-static-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "serveTarget": "dashboard:serve"
+      },
+      "configurations": {
+        "development": {
+          "serveTarget": "dashboard:serve:development"
+        },
+        "production": {
+          "serveTarget": "dashboard:serve:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "remotes/dashboard/jest.config.ts"
+      }
+    }
+  }
+}
