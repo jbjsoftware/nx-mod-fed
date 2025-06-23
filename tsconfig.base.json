@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "dashboard/Module": ["remotes/dashboard/src/remote-entry.ts"]
+      "dashboard/Module": ["remotes/dashboard/src/remote-entry.ts"],
+      "products/Module": [
+        "remotes/products-remote/products/src/remote-entry.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

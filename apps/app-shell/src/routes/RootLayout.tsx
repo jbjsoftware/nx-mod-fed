@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
+
 import '../styles.css';
+
 import AppHeader from '../components/layout/app-header';
 
 const RootLayout = () => {
@@ -10,6 +12,7 @@ const RootLayout = () => {
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
         <Link to="/settings">Settings</Link>
+        <Link to="/products">Products</Link>
       </div>
       <div className="flex flex-1 flex-col bg-red">
         <AppHeader />

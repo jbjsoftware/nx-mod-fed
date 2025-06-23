@@ -1,3 +1,4 @@
 {
-    "dashboard": "http://localhost:4201/mf-manifest.json"
-  }
+  "dashboard": "http://localhost:4201/mf-manifest.json",
+  "products": "http://localhost:4202/mf-manifest.json"
+}

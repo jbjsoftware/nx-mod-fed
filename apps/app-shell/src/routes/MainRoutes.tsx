@@ -6,6 +6,7 @@ import SettingsPage from '../pages/settings/settings';
 import { loadRemote } from '@module-federation/enhanced/runtime';
 
 const Dashboard = React.lazy(() => loadRemote('dashboard/Module') as any);
+const Products = React.lazy(() => loadRemote('products/Module') as any);
 
 export default function MainRoutes() {
   return (
@@ -26,6 +27,10 @@ export default function MainRoutes() {
             {
               path: '/settings',
               element: <SettingsPage />,
+            },
+            {
+              path: '/products',
+              element: <Products />,
             },
           ],
         },
