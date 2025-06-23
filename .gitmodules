@@ -1,0 +1,3 @@
+[submodule "remotes/products-remote"]
+	path = remotes/products-remote
+	url = https://github.com/jbjsoftware/products-remote.git
