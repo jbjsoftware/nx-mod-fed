@@ -5,8 +5,8 @@
   "types": "./index.d.ts",
   "type": "module",
   "exports": {
-    "_comment": "This section is managed by scripts/update-package-exports.js",
-    "_source": "See exports.config.js for export definitions"
+    "// NOTE": "This section is now managed by scripts/update-package-exports.js",
+    "// SOURCE": "See exports.config.js for the actual export definitions"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.14",
@@ -43,4 +43,4 @@
     "update-exports": "node scripts/update-package-exports.js",
     "prebuild": "npm run update-exports"
   }
-}
+} 

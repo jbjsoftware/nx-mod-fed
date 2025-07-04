@@ -6,6 +6,37 @@ import * as path from 'path';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 import tailwindcss from '@tailwindcss/vite';
+import { glob } from 'glob';
+
+// Import external configuration for DRY principle
+function generateEntries() {
+  const entries: Record<string, string> = {
+    // Main barrel export
+    index: 'src/index.ts',
+  };
+
+  // Get all component files for individual entries
+  const componentFiles = glob.sync('./src/components/**/*.tsx', {
+    cwd: __dirname,
+  });
+  componentFiles.forEach((file) => {
+    const relativePath = path.relative('./src', file);
+    const entryName = relativePath.replace(/\.tsx?$/, '').replace(/\//g, '-');
+    entries[entryName] = file;
+  });
+
+  // Also add utility and hook files
+  const utilFiles = glob.sync('./src/{lib,hooks}/**/*.ts', { cwd: __dirname });
+  utilFiles.forEach((file) => {
+    const relativePath = path.relative('./src', file);
+    const entryName = relativePath.replace(/\.tsx?$/, '').replace(/\//g, '-');
+    entries[entryName] = file;
+  });
+
+  return entries;
+}
+
+const entries = generateEntries();
 
 export default defineConfig(() => ({
   root: __dirname,
@@ -18,6 +49,7 @@ export default defineConfig(() => ({
     dts({
       entryRoot: 'src',
       tsconfigPath: path.join(__dirname, 'tsconfig.lib.json'),
+      rollupTypes: true,
     }),
   ],
   resolve: {
@@ -39,10 +71,14 @@ export default defineConfig(() => ({
       transformMixedEsModules: true,
     },
     lib: {
-      // Could also be a dictionary or array of multiple entry points.
-      entry: 'src/index.ts',
+      // Multiple entry points for tree-shaking
+      entry: entries,
       name: 'ui',
-      fileName: 'index',
+      fileName: (format, entryName) => {
+        return entryName === 'index'
+          ? `index.${format === 'es' ? 'mjs' : 'js'}`
+          : `${entryName}.${format === 'es' ? 'mjs' : 'js'}`;
+      },
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.
       formats: ['es' as const],
@@ -50,6 +86,11 @@ export default defineConfig(() => ({
     rollupOptions: {
       // External packages that should not be bundled into your library.
       external: ['react', 'react-dom', 'react/jsx-runtime'],
+      output: {
+        // Preserve tree shaking
+        preserveModules: false,
+        exports: 'named',
+      },
     },
   },
 }));
