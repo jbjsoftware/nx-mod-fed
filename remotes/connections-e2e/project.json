@@ -1,0 +1,17 @@
+{
+  "name": "connections-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "remotes/connections-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["connections"],
+  "targets": {
+    "e2e": {
+      "executor": "@nx/playwright:playwright",
+      "outputs": ["{workspaceRoot}/dist/.playwright/remotes/connections-e2e"],
+      "options": {
+        "config": "remotes/connections-e2e/playwright.config.ts"
+      }
+    }
+  }
+}

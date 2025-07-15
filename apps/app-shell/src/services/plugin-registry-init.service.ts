@@ -1,6 +1,6 @@
 import React from 'react';
 import { pluginRegistry } from './plugin-registry.service';
-import { LayoutDashboard } from 'lucide-react';
+import { LayoutDashboard, Network } from 'lucide-react';
 
 /**
  * Initialize the plugin registry with existing remotes
@@ -21,6 +21,24 @@ export async function initializePluginRegistry() {
           path: '/dashboard',
           label: 'Dashboard',
           icon: React.createElement(LayoutDashboard, { size: 16 }),
+        },
+      ],
+    });
+
+    // Register connections as a plugin
+    await pluginRegistry.registerPlugin({
+      name: 'Connections',
+      description: 'Network connections management module',
+      version: '1.0.0',
+      url: 'http://localhost:4203/remoteEntry.js',
+      moduleName: 'connections',
+      exposedModule: 'Module',
+      enabled: true,
+      routes: [
+        {
+          path: '/connections',
+          label: 'Connections',
+          icon: React.createElement(Network, { size: 16 }),
         },
       ],
     });

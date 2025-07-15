@@ -4,7 +4,7 @@ import {
   RouterProvider,
   Outlet,
   useLocation,
-} from 'react-router-dom';
+} from 'react-router';
 import RootLayout from './RootLayout';
 import AboutPage from '../pages/about/about';
 import SettingsPage from '../pages/settings/containers/settings';
@@ -36,7 +36,16 @@ const DynamicPluginRoute: React.FC<{ plugin: any }> = ({ plugin }) => {
       try {
         console.log(`Loading plugin: ${plugin.name} (${pluginKey})`);
         const module = (await loadRemote(pluginKey)) as any;
-        return { default: module.default || module };
+        const Component = module.default || module;
+
+        // Wrap the component to handle both routes and components
+        return {
+          default: (props: any) => (
+            <div style={{ width: '100%', height: '100%' }}>
+              <Component {...props} />
+            </div>
+          ),
+        };
       } catch (error) {
         console.error(`Failed to load plugin ${plugin.name}:`, error);
         return {
@@ -76,7 +85,8 @@ const PluginCatchAll: React.FC = () => {
   for (const plugin of enabledPlugins) {
     if (plugin.routes) {
       for (const route of plugin.routes) {
-        if (route.path === currentPath) {
+        // Check if current path starts with the plugin route path
+        if (currentPath.startsWith(route.path)) {
           return <DynamicPluginRoute plugin={plugin} />;
         }
       }
@@ -124,6 +134,11 @@ export default function MainRoutes() {
             //   path: '/products',
             //   element: <Products />,
             // },
+            // Handle plugin routes dynamically
+            {
+              path: '/connections/*',
+              element: <PluginCatchAll />,
+            },
             {
               path: '*',
               element: <PluginCatchAll />,

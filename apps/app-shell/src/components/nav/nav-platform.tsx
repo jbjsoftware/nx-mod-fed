@@ -7,7 +7,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@repo/ui';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 export function NavPlatform({
   projects,

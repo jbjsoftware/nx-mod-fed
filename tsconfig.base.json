@@ -17,6 +17,7 @@
     "paths": {
       "@repo/ui": ["packages/ui/src/index.ts"],
       "@repo/ui/*": ["packages/ui/src/*"],
+      "connections/Module": ["remotes/connections/src/remote-entry.ts"],
       "dashboard/Module": ["remotes/dashboard/src/remote-entry.ts"],
       "products/Module": [
         "remotes/products-remote/products/src/remote-entry.ts"

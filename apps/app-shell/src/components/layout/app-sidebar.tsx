@@ -16,7 +16,7 @@ import {
   SidebarRail,
   useSidebar,
 } from '@repo/ui';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { usePluginRegistry } from '../../hooks/use-plugin-registry';
 
 const data = {
