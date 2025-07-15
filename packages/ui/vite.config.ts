@@ -10,16 +10,23 @@ import { glob } from 'glob';
 
 // Import external configuration for DRY principle
 function generateEntries() {
-  const entries: Record<string, string> = {
-    // Main barrel export
-    index: 'src/index.ts',
-  };
+  const entries: Record<string, string> = {};
 
   // Get all component files for individual entries
   const componentFiles = glob.sync('./src/components/**/*.tsx', {
     cwd: __dirname,
   });
   componentFiles.forEach((file) => {
+    const relativePath = path.relative('./src', file);
+    const entryName = relativePath.replace(/\.tsx?$/, '').replace(/\//g, '-');
+    entries[entryName] = file;
+  });
+
+  // Add provider files
+  const providerFiles = glob.sync('./src/providers/**/*.tsx', {
+    cwd: __dirname,
+  });
+  providerFiles.forEach((file) => {
     const relativePath = path.relative('./src', file);
     const entryName = relativePath.replace(/\.tsx?$/, '').replace(/\//g, '-');
     entries[entryName] = file;
@@ -75,9 +82,7 @@ export default defineConfig(() => ({
       entry: entries,
       name: 'ui',
       fileName: (format, entryName) => {
-        return entryName === 'index'
-          ? `index.${format === 'es' ? 'mjs' : 'js'}`
-          : `${entryName}.${format === 'es' ? 'mjs' : 'js'}`;
+        return `${entryName}.${format === 'es' ? 'mjs' : 'js'}`;
       },
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.
